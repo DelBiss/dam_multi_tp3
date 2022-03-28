@@ -42,11 +42,8 @@ class AnimalDB {
     }
 
     Future<List<Animal>> get() async {
-        // Query the table for all The Dogs.
         if (db != null){
             final List<Map<String, dynamic>> maps = await db!.query(name);
-
-            // Convert the List<Map<String, dynamic> into a List<Dog>.
             return List.generate(
                 maps.length,
                 (i) {
@@ -78,7 +75,6 @@ class Animal {
   final String name;
   const Animal({required this.id, required this.name, required this.age});
 
-  // Convert a Dog into a Map. The keys must correspond to the names of the columns in the database.
   Map<String, dynamic> toMap() {
     return {'id': id, 'name': name, 'age': age};
   }
