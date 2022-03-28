@@ -27,7 +27,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  bloc: ^8.0.3
   camera: ^0.9.4+17
   cupertino_icons: ^1.0.2
   email_validator: ^2.0.1
@@ -36,7 +35,6 @@ dependencies:
   flutter_keychain: ^2.1.0
   shared_preferences: ^2.0.13
   sqflite: ^2.0.2
-  sqflite_common_ffi: ^2.1.0+2
   video_player: ^2.3.0
 
 dev_dependencies:

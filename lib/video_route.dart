@@ -10,13 +10,9 @@ class VideoRoute extends StatefulWidget {
   _VideoRouteState createState() => _VideoRouteState();
 }
 
-
 class _VideoRouteState extends State<VideoRoute > {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
-  
-
-  
 
   @override
   void initState() {
@@ -33,7 +29,7 @@ class _VideoRouteState extends State<VideoRoute > {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( home: Scaffold(
+    return Scaffold(
       appBar: AppBar(title: const Text("Video"),),
       body: FutureBuilder(
         future: _initializeVideoPlayerFuture,
@@ -41,7 +37,13 @@ class _VideoRouteState extends State<VideoRoute > {
           if (snapshot.connectionState == ConnectionState.done) {
             return AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  VideoPlayer(_controller),
+                  VideoProgressIndicator(_controller, allowScrubbing: true),
+                ],
+              ),
             );
           } else {
             return const Center( child: CircularProgressIndicator(), );
@@ -51,5 +53,5 @@ class _VideoRouteState extends State<VideoRoute > {
           _controller.value.isPlaying ? _controller.pause() : _controller.play();
         });},
         child: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
-      ),),);}
+      ),);}
 }

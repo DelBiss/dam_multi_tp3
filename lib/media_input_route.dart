@@ -37,7 +37,7 @@ class _MediaInputRouteState extends State<MediaInputRoute> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Column(
               children: [
-                Expanded(child: _controller.preview),
+                _controller.preview,
                 MediaButton(controller: _controller)
               ],
             );

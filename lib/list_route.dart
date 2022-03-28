@@ -77,7 +77,7 @@ class _SQLListState extends State<SQLList> {
       itemBuilder: (BuildContext context, int index) {
         
         return ListTile(
-          leading: IconButton(
+          trailing: IconButton(
             icon: const Icon(Icons.delete_forever),
             onPressed: () async {
               var nbDeleted = await sqlDB.delete(entries[index].id);
@@ -85,7 +85,20 @@ class _SQLListState extends State<SQLList> {
               refreshData();
             },
           ),
-          title:  Text('${entries[index]}'),
+          title:  Text(entries[index].name),
+          subtitle: Text("Age: ${entries[index].age}"),
+          leading: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(20))
+                      ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Center(
+                        child: Text("${entries[index].id}", style: const TextStyle(fontSize: 25),),
+                      ),
+                    )
+              ),
         );
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(),

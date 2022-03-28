@@ -1,43 +1,52 @@
+import 'package:dam_multi_tp3/login_text_box_value_controller.dart';
 import 'package:flutter/material.dart';
 
 class LoginTextBox extends StatefulWidget {
-  final TextEditingController? controller;
+  final TextBoxValueController controller;
   final bool isPassword;
   final String? label;
-  final String? initial;
   final Widget? icon;
-  final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
-
+  
   const LoginTextBox(
-      {Key? key,
+    {
+      Key? key,
       this.label,
       this.icon,
-      this.validator,
-      this.onSaved,
-      this.isPassword = false,
-      this.initial, this.controller})
-      : super(key: key);
+      this.isPassword = false, required this.controller,
+    }
+  ): super(key: key);
 
   @override
   State<LoginTextBox> createState() => _LoginTextBoxState();
 }
 
 class _LoginTextBoxState extends State<LoginTextBox> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+
+  Future<void> load() async {
+    TextEditingValue initialeValue = await widget.controller.load();
+    setState(() {
+      _controller.value = initialeValue;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    debugPrint("Initiale value: " + (widget.initial??"ND"));
     return TextFormField(
-      controller: widget.controller,
+      controller: _controller,
       decoration: InputDecoration(
         labelText: widget.label ?? (widget.isPassword ? "Mot de passe" : "Courriel"),
         suffixIcon: widget.icon ??
             (widget.isPassword ? const Icon(Icons.lock) : const Icon(Icons.mail)),
       ),
       obscureText: widget.isPassword,
-      validator: widget.validator,
-      initialValue: widget.initial,
-      onSaved: widget.onSaved,
+      validator: widget.controller.validator,
+      onSaved: widget.controller.save
     );
   }
 }
